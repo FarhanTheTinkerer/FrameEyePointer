@@ -18,12 +18,10 @@ Both share `eyepointer_core`, the gaze filtering and input logic, which
 
 ## Steam Frame quick start
 
-On the headset, in Konsole (Desktop mode), with the `FrameEyePointer-steamframe-arm64`
-package from the [Actions tab](../../actions/workflows/build.yml):
+On the headset, in Konsole (Launch a program → Desktop → System → Konsole):
 
 ```sh
-unzip FrameEyePointer-steamframe-arm64.zip && tar xzf FrameEyePointer-steamframe-arm64.tar.gz
-cd FrameEyePointer && ./install.sh
+curl -fsSL https://raw.githubusercontent.com/FarhanTheTinkerer/FrameEyePointer/main/get.sh | bash
 ~/.local/share/frameeyepointer/install.sh probe     # after SteamVR restarts
 ```
 

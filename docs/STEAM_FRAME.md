@@ -25,27 +25,29 @@ Steam, overlays, and desktop panels, anywhere a controller's laser works.
 
 ## Install
 
-You need the Steam Frame, a keyboard (Bluetooth or on-screen), and about 10 MB.
+You need the Steam Frame, an internet connection and a keyboard (Bluetooth or
+on-screen). No GitHub account or `sudo`.
 
-1. Get the package: on the headset, open the latest successful **build** run in the
-   repository's Actions tab and download `FrameEyePointer-steamframe-arm64`. Or
-   build it yourself (below).
-2. In the launcher, choose Launch a program → Desktop, then open System → Konsole.
-3. Unpack and install:
+1. In the launcher, choose **Launch a program → Desktop**, then open **System → Konsole**.
+2. Run:
    ```sh
-   cd ~/Downloads
-   unzip FrameEyePointer-steamframe-arm64.zip    # GitHub's wrapper around the tarball
-   tar xzf FrameEyePointer-steamframe-arm64.tar.gz
-   cd FrameEyePointer && ./install.sh
+   curl -fsSL https://raw.githubusercontent.com/FarhanTheTinkerer/FrameEyePointer/main/get.sh | bash
    ```
-   Nothing needs `sudo`. Files go to `~/.local/share/frameeyepointer`, the driver is
-   registered with SteamVR, and a user service is set up to start with SteamVR. It
-   offers to restart SteamVR, which it needs to load the driver.
-4. Check it:
+   It downloads the latest headset package, installs it to
+   `~/.local/share/frameeyepointer`, registers the driver with SteamVR, and sets up a
+   user service that starts with SteamVR. When it asks to restart SteamVR, answer `y`:
+   SteamVR loads drivers only when it starts.
+3. With SteamVR back and the headset on, check it:
    ```sh
    ~/.local/share/frameeyepointer/install.sh probe
    ```
    Look for `laser driver: loaded` and `gaze action: N of 90 samples valid`.
+
+Run the same `curl` line again to update.
+
+Without the one-liner: download `FrameEyePointer-steamframe-arm64.tar.gz` from the
+repository's **Releases** (`frame-latest`), then `tar xzf` it and run
+`FrameEyePointer/install.sh`.
 
 The service turns on SteamVR's **Enable global input from overlays
 (Experimental)** setting, so the bumpers reach it while the dashboard or another app
