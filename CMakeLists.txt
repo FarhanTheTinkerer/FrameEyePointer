@@ -8,6 +8,12 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 option(EYEPOINTER_BUILD_APP "Build the SteamVR overlay application" ON)
 option(EYEPOINTER_BUILD_TESTS "Build unit tests for the core library" ON)
 
+# Static MSVC runtime so the exe only needs openvr_api.dll next to it. Only when
+# built on its own: a parent project (e.g. SlopCadVR) keeps its own choice.
+if(CMAKE_SOURCE_DIR STREQUAL CMAKE_CURRENT_SOURCE_DIR)
+    set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
+endif()
+
 if(MSVC)
     add_compile_options(/W4 /permissive- /utf-8)
     add_compile_definitions(_CRT_SECURE_NO_WARNINGS NOMINMAX WIN32_LEAN_AND_MEAN)

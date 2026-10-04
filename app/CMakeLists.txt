@@ -19,8 +19,6 @@ if(WIN32)
     set_target_properties(FrameEyePointer PROPERTIES WIN32_EXECUTABLE TRUE)
     if(MSVC)
         target_link_options(FrameEyePointer PRIVATE /ENTRY:mainCRTStartup)
-        set_property(TARGET FrameEyePointer PROPERTY
-            MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
     elseif(MINGW)
         target_link_options(FrameEyePointer PRIVATE -static -static-libgcc -static-libstdc++)
     endif()
