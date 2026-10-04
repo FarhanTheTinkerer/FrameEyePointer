@@ -4,6 +4,7 @@
 #include "eyepointer/GazeTracker.h"
 #include "eyepointer/Reticle.h"
 
+#include <algorithm>
 #include <cmath>
 
 using namespace eyepointer;
