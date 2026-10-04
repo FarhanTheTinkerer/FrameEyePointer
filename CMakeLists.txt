@@ -7,6 +7,12 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 option(EYEPOINTER_BUILD_APP "Build the SteamVR overlay application" ON)
 option(EYEPOINTER_BUILD_TESTS "Build unit tests for the core library" ON)
+if(CMAKE_SYSTEM_NAME STREQUAL "Linux")
+    set(_frame_default ON)
+else()
+    set(_frame_default OFF)
+endif()
+option(EYEPOINTER_BUILD_FRAME "Build the Steam Frame driver and service (Linux)" ${_frame_default})
 
 # Static MSVC runtime so the exe only needs openvr_api.dll next to it. Only when
 # built on its own: a parent project (e.g. SlopCadVR) keeps its own choice.
@@ -26,7 +32,12 @@ endif()
 # pointer logic. No OpenVR dependency, so other apps (e.g. SlopCadVR) can reuse it.
 # ---------------------------------------------------------------------------
 add_library(eyepointer_core STATIC
+    core/src/ClickSequencer.cpp
     core/src/DesktopMapping.cpp
+    core/src/EyeServer.cpp
+    core/src/FrameSettings.cpp
+    core/src/IniFile.cpp
+    core/src/InputSources.cpp
     core/src/GazeFilter.cpp
     core/src/GazeTracker.cpp
     core/src/PointerController.cpp
@@ -35,7 +46,7 @@ add_library(eyepointer_core STATIC
 )
 target_include_directories(eyepointer_core PUBLIC core/include)
 
-if(EYEPOINTER_BUILD_APP)
+if(EYEPOINTER_BUILD_APP OR EYEPOINTER_BUILD_FRAME)
     # OpenVR SDK 2.15.6, vendored under third_party/openvr.
     set(OPENVR_DIR ${CMAKE_CURRENT_SOURCE_DIR}/third_party/openvr)
     add_library(openvr_api SHARED IMPORTED GLOBAL)
@@ -54,13 +65,23 @@ if(EYEPOINTER_BUILD_APP)
         endif()
     elseif(CMAKE_SYSTEM_PROCESSOR MATCHES "aarch64|arm64|ARM64")
         set(OPENVR_RUNTIME ${OPENVR_DIR}/bin/linuxarm64/libopenvr_api.so)
-        set_target_properties(openvr_api PROPERTIES IMPORTED_LOCATION ${OPENVR_RUNTIME})
     else()
         set(OPENVR_RUNTIME ${OPENVR_DIR}/bin/linux64/libopenvr_api.so)
-        set_target_properties(openvr_api PROPERTIES IMPORTED_LOCATION ${OPENVR_RUNTIME})
     endif()
+    if(NOT WIN32)
+        # Valve's libopenvr_api.so has no SONAME: without this the executables would
+        # record its absolute build path instead of finding it next to themselves.
+        set_target_properties(openvr_api PROPERTIES
+            IMPORTED_LOCATION ${OPENVR_RUNTIME} IMPORTED_NO_SONAME TRUE)
+    endif()
+endif()
 
+if(EYEPOINTER_BUILD_APP)
     add_subdirectory(app)
+endif()
+
+if(EYEPOINTER_BUILD_FRAME)
+    add_subdirectory(frame)
 endif()
 
 if(EYEPOINTER_BUILD_TESTS)
@@ -68,6 +89,7 @@ if(EYEPOINTER_BUILD_TESTS)
     add_executable(eyepointer_tests
         tests/main.cpp
         tests/test_desktop.cpp
+        tests/test_frame.cpp
         tests/test_gaze.cpp
         tests/test_settings.cpp
     )

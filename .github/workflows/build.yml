@@ -44,3 +44,33 @@ jobs:
         run: |
           cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DCMAKE_TOOLCHAIN_FILE=cmake/mingw-w64-x86_64.cmake -DEYEPOINTER_BUILD_TESTS=OFF
           cmake --build build -j
+
+  steamframe-arm64:
+    # Ubuntu 24.04's aarch64 cross toolchain has glibc 2.39, the same as SteamOS on the Frame.
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install the ARM64 toolchain
+        run: sudo apt-get update && sudo apt-get install -y g++-aarch64-linux-gnu ninja-build
+      - name: Build
+        run: |
+          cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release \
+                -DCMAKE_TOOLCHAIN_FILE=cmake/aarch64-linux-gnu.cmake \
+                -DEYEPOINTER_BUILD_APP=OFF -DEYEPOINTER_BUILD_TESTS=OFF
+          cmake --build build
+      - name: Check the binaries only need glibc 2.39 or older
+        run: |
+          for f in build/frame/frameeyepointerd build/frame/driver_frameeyepointer.so; do
+            newest=$(aarch64-linux-gnu-objdump -T "$f" | grep -oE 'GLIBC_[0-9.]+' | sort -uV | tail -1)
+            echo "$f: $newest"
+            [ "$(printf '%s\n' "$newest" GLIBC_2.39 | sort -V | tail -1)" = GLIBC_2.39 ] || exit 1
+          done
+      - name: Package
+        # A tarball inside the artifact: artifact zips drop the executable bits.
+        run: |
+          cmake --install build --prefix dist/FrameEyePointer
+          tar -C dist -czf FrameEyePointer-steamframe-arm64.tar.gz FrameEyePointer
+      - uses: actions/upload-artifact@v4
+        with:
+          name: FrameEyePointer-steamframe-arm64
+          path: FrameEyePointer-steamframe-arm64.tar.gz

@@ -1,13 +1,43 @@
 # FrameEyePointer
 
-An eye-tracked "laser pointer" for SteamVR on the Steam Frame. Wherever you look,
-a reticle appears; look at a desktop overlay and the Windows mouse follows your
-eyes; press a controller button to click.
+An eye-tracked laser pointer for SteamVR on the Steam Frame. Look at something
+and press a button to click it.
 
-It is a small SteamVR **overlay app** that runs next to whatever game or app you
-have open. It reads gaze through the official OpenVR eye-tracking API
-(`IVRInput::GetEyeTrackingDataRelativeToNow`, OpenVR SDK 2.15.6), so it runs on
-the PC that runs SteamVR (the Frame streams from it) with no headset-side hacks.
+There are two versions:
+
+| | **On the headset** (Steam Frame, SteamOS) | **On a PC** (Windows, streaming to the Frame) |
+| --- | --- | --- |
+| Runs on | The Frame itself (ARM64) | The PC running SteamVR |
+| Points at | Everything SteamVR's laser works on: dashboard, Steam, overlays, desktop panels | Overlays (reticle); the Windows desktop through Desktop+ (moves the real mouse) |
+| How | A SteamVR driver adds an invisible controller whose ray is your gaze, so SteamVR's own laser follows your eyes | An overlay app that draws a reticle and drives the Windows cursor |
+| Input | Modular: eyes, controllers, and later hand tracking ([INPUT_SOURCES.md](docs/INPUT_SOURCES.md)) | Eyes and controllers |
+| Docs | **[docs/STEAM_FRAME.md](docs/STEAM_FRAME.md)** | Below |
+
+Both share `eyepointer_core`, the gaze filtering and input logic, which
+[SlopCadVR can reuse too](docs/SLOPCADVR_INTEGRATION.md).
+
+## Steam Frame quick start
+
+On the headset, in Konsole (Desktop mode), with the `FrameEyePointer-steamframe-arm64`
+package from the [Actions tab](../../actions/workflows/build.yml):
+
+```sh
+unzip FrameEyePointer-steamframe-arm64.zip && tar xzf FrameEyePointer-steamframe-arm64.tar.gz
+cd FrameEyePointer && ./install.sh
+~/.local/share/frameeyepointer/install.sh probe     # after SteamVR restarts
+```
+
+Right bumper clicks where you look, left bumper right-clicks, right thumbstick scrolls,
+and holding left View turns it on or off. See [docs/STEAM_FRAME.md](docs/STEAM_FRAME.md)
+for settings, how it works, and Steam's controller-click problem and the workaround.
+
+---
+
+# PC version (Windows overlay app)
+
+This is a small SteamVR **overlay app** that runs next to whatever game or app you
+have open on the PC. It reads gaze through the official OpenVR eye-tracking API
+(`IVRInput::GetEyeTrackingDataRelativeToNow`, OpenVR SDK 2.15.6).
 
 ## What it does
 
@@ -98,7 +128,10 @@ the app is running. Main knobs:
 | `core/` | `eyepointer_core`: platform-independent gaze filter, gaze tracker, desktop mapping, pointer/click logic, settings and reticle image. No OpenVR dependency. Unit tested. |
 | `core/include/eyepointer/openvr/OpenVrGaze.h` | Header-only OpenVR glue (read gaze, HMD pose, conversions), shared by this app and [SlopCadVR](docs/SLOPCADVR_INTEGRATION.md). |
 | `app/` | The overlay app, platform layer (Windows mouse, monitors), action manifest and bindings. |
-| `third_party/openvr/` | OpenVR SDK 2.15.6 header and runtime libraries, unmodified. |
+| `frame/driver/` | Steam Frame: the SteamVR driver (virtual eye-laser controller) and its resources. |
+| `frame/service/` | Steam Frame: `frameeyepointerd` and its input-source modules (`InputSource.h`). |
+| `frame/install.sh` | Steam Frame: installer, run on the headset. |
+| `third_party/openvr/` | OpenVR SDK 2.15.6 headers and runtime libraries, unmodified. |
 
 ## Build
 
@@ -141,6 +174,10 @@ cmake --build build/win -j
 - [ValveSoftware/openvr](https://github.com/ValveSoftware/openvr): SDK and eye-tracking API.
 - [konsti219/frameeyeosc](https://github.com/konsti219/frameeyeosc): showed the
   Frame's eye data (gaze, fixation point, lids) and its head-relative, −Z-forward convention.
+- [DeeJanuz/frametop](https://github.com/DeeJanuz/frametop) (MIT): the headset
+  version's virtual-controller driver and laser handling are adapted from its
+  pointer, and its notes on Steam's controller handling and the eye tracker shaped
+  the design. See [THIRD_PARTY.md](THIRD_PARTY.md).
 - [zisonMyu/SteamGazeOverlay](https://github.com/zisonMyu/SteamGazeOverlay): confirmed
   the `eyetracking` binding path (`/user/head/eyetracking`) and Desktop+ UV conventions.
   No code was copied.

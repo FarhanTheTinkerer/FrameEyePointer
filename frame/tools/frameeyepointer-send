@@ -1,0 +1,42 @@
+#!/usr/bin/env python3
+"""Send FrameEyePointer external-input messages (see INPUT_SOURCES.md).
+
+Examples:
+  frameeyepointer-send 'aim test head 0 0 0 0.2 0 -1'   # point 11 degrees left of straight ahead
+  frameeyepointer-send 'btn test click 1' 'btn test click 0'
+  frameeyepointer-send --repeat 5 'aim test head 0 0 0 0 0 -1'   # keep it alive for 5 s
+
+A source must be listed in [inputs] aim_sources / button_sources (here "test") to be used.
+"""
+import socket
+import sys
+import time
+
+SOCKET = b"\0frameeyepointer_input"
+
+
+def main(argv):
+    repeat = 0.0
+    if len(argv) >= 2 and argv[0] == "--repeat":
+        repeat = float(argv[1])
+        argv = argv[2:]
+    if not argv:
+        print(__doc__.strip())
+        return 2
+    s = socket.socket(socket.AF_UNIX, socket.SOCK_DGRAM)
+    end = time.monotonic() + repeat
+    while True:
+        for msg in argv:
+            s.sendto(msg.encode(), SOCKET)
+        if time.monotonic() >= end:
+            return 0
+        time.sleep(1 / 90)
+
+
+if __name__ == "__main__":
+    try:
+        sys.exit(main(sys.argv[1:]))
+    except ConnectionRefusedError:
+        print("frameeyepointerd isn't listening (is it running, with an external source configured?)",
+              file=sys.stderr)
+        sys.exit(1)

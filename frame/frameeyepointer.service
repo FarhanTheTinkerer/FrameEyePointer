@@ -1,0 +1,14 @@
+# Installed by FrameEyePointer's install.sh (from frame/frameeyepointer.service).
+[Unit]
+Description=FrameEyePointer: eye-tracked laser pointer for SteamVR
+Documentation=file://@DIR@/STEAM_FRAME.md
+@UNIT_EXTRA@
+
+[Service]
+ExecStart=@DIR@/frameeyepointerd
+Restart=on-failure
+RestartSec=3
+TimeoutStopSec=5
+
+[Install]
+WantedBy=@WANTED_BY@

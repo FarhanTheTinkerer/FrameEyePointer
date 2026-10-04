@@ -1,0 +1,42 @@
+{
+  "jsonid": "input_profile",
+  "controller_type": "frameeyepointer",
+  "device_class": "TrackedDeviceClass_Controller",
+  "resource_root": "frameeyepointer",
+  "driver_name": "frameeyepointer",
+  "input_bindingui_mode": "controller_handed",
+  "should_show_binding_errors": true,
+  "input_source": {
+    "/input/trigger": {
+      "type": "button",
+      "click": true
+    },
+    "/input/b": {
+      "type": "button",
+      "click": true
+    },
+    "/input/a": {
+      "type": "button",
+      "click": true
+    },
+    "/input/joystick": {
+      "type": "joystick"
+    },
+    "/pose/raw": {
+      "type": "pose"
+    },
+    "/pose/tip": {
+      "type": "pose"
+    }
+  },
+  "default_bindings": [
+    {
+      "app_key": "openvr.component.vrcompositor",
+      "binding_url": "frameeyepointer_vrcompositor.json"
+    },
+    {
+      "app_key": "steam.client",
+      "binding_url": "frameeyepointer_steam.json"
+    }
+  ]
+}

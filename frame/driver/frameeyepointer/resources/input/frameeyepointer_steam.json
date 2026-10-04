@@ -1,0 +1,16 @@
+{
+  "action_manifest_version": 0,
+  "alias_info": {},
+  "app_key": "steam.client",
+  "category": "steamvr_input",
+  "controller_type": "frameeyepointer",
+  "description": "",
+  "name": "FrameEyePointer: Steam client (input comes through the laser mouse)",
+  "options": {},
+  "simulated_actions": [],
+  "bindings": {
+    "/actions/haptics": {
+      "sources": []
+    }
+  }
+}

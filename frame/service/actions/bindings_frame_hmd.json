@@ -1,0 +1,16 @@
+{
+  "action_manifest_version": 0,
+  "controller_type": "frame_hmd",
+  "name": "FrameEyePointer gaze",
+  "description": "The headset's eye tracker",
+  "bindings": {
+    "/actions/gaze": {
+      "eyetracking": [
+        {
+          "path": "/user/head/eyetracking",
+          "output": "/actions/gaze/in/gaze"
+        }
+      ]
+    }
+  }
+}

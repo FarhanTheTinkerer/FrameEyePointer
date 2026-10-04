@@ -1,0 +1,80 @@
+{
+  "default_bindings": [
+    {
+      "controller_type": "frame_controller",
+      "binding_url": "bindings_frame_controller.json"
+    },
+    {
+      "controller_type": "frame_hmd",
+      "binding_url": "bindings_frame_hmd.json"
+    },
+    {
+      "controller_type": "generic_hmd",
+      "binding_url": "bindings_generic_hmd.json"
+    }
+  ],
+  "action_sets": [
+    {
+      "name": "/actions/gaze",
+      "usage": "hidden"
+    },
+    {
+      "name": "/actions/click",
+      "usage": "hidden"
+    },
+    {
+      "name": "/actions/rightclick",
+      "usage": "hidden"
+    },
+    {
+      "name": "/actions/toggle",
+      "usage": "hidden"
+    },
+    {
+      "name": "/actions/scroll",
+      "usage": "hidden"
+    }
+  ],
+  "actions": [
+    {
+      "name": "/actions/gaze/in/gaze",
+      "type": "eyetracking",
+      "requirement": "optional"
+    },
+    {
+      "name": "/actions/click/in/press",
+      "type": "boolean",
+      "requirement": "optional"
+    },
+    {
+      "name": "/actions/rightclick/in/press",
+      "type": "boolean",
+      "requirement": "optional"
+    },
+    {
+      "name": "/actions/toggle/in/press",
+      "type": "boolean",
+      "requirement": "optional"
+    },
+    {
+      "name": "/actions/scroll/in/stick",
+      "type": "vector2",
+      "requirement": "optional"
+    }
+  ],
+  "localization": [
+    {
+      "language_tag": "en_US",
+      "/actions/gaze": "FrameEyePointer: Eye gaze",
+      "/actions/click": "FrameEyePointer: Click where I look",
+      "/actions/rightclick": "FrameEyePointer: Right click where I look",
+      "/actions/toggle": "FrameEyePointer: Turn the eye laser on/off (hold)",
+      "/actions/scroll": "FrameEyePointer: Scroll where I look",
+      "/actions/gaze/in/gaze": "Eye gaze",
+      "/actions/click/in/press": "Click where I look",
+      "/actions/rightclick/in/press": "Right click where I look",
+      "/actions/toggle/in/press": "Turn the eye laser on/off (hold)",
+      "/actions/scroll/in/stick": "Scroll where I look"
+    }
+  ]
+}
