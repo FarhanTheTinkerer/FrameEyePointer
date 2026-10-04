@@ -25,7 +25,7 @@ struct Options {
 
 class EyePointerApp {
 public:
-    static constexpr const char* kAppKey = "farhanthetinkerer.frameeyepointer";
+    static constexpr const char* kAppKey = "frameeyepointer.pc";
 
     explicit EyePointerApp(Options options) : options_(std::move(options)) {}
     ~EyePointerApp();

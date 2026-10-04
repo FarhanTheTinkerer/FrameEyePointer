@@ -1,7 +1,7 @@
 {
   "action_manifest_version": 0,
   "alias_info": {},
-  "app_key": "farhanthetinkerer.frameeyepointer",
+  "app_key": "frameeyepointer.pc",
   "category": "steamvr_input",
   "controller_type": "frame_controller",
   "description": "Eye pointer clicks",

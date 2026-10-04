@@ -2,7 +2,7 @@
   "source": "builtin",
   "applications": [
     {
-      "app_key": "farhanthetinkerer.frameeyepointer",
+      "app_key": "frameeyepointer.pc",
       "launch_type": "binary",
       "binary_path_windows": "FrameEyePointer.exe",
       "binary_path_linux": "FrameEyePointer",

@@ -25,7 +25,7 @@ using eyepointer::openvr::toVec;
 
 namespace {
 
-constexpr const char* kReticleKey = "farhanthetinkerer.frameeyepointer.reticle";
+constexpr const char* kReticleKey = "frameeyepointer.pc.reticle";
 constexpr int kReticlePixels = 128;
 constexpr int kMaxWildcardIndex = 32;
 
