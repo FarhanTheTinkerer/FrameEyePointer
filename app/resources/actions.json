@@ -1,0 +1,32 @@
+{
+  "default_bindings": [
+    { "controller_type": "frame_controller", "binding_url": "bindings/frame_controller.json" },
+    { "controller_type": "frame_hmd", "binding_url": "bindings/frame_hmd.json" },
+    { "controller_type": "generic_hmd", "binding_url": "bindings/generic_hmd.json" },
+    { "controller_type": "knuckles", "binding_url": "bindings/knuckles.json" },
+    { "controller_type": "oculus_touch", "binding_url": "bindings/oculus_touch.json" }
+  ],
+  "action_sets": [
+    { "name": "/actions/eyepointer", "usage": "single" }
+  ],
+  "actions": [
+    { "name": "/actions/eyepointer/in/gaze", "type": "eyetracking", "requirement": "optional" },
+    { "name": "/actions/eyepointer/in/click_left", "type": "boolean", "requirement": "suggested" },
+    { "name": "/actions/eyepointer/in/click_right", "type": "boolean", "requirement": "suggested" },
+    { "name": "/actions/eyepointer/in/toggle", "type": "boolean", "requirement": "optional" },
+    { "name": "/actions/eyepointer/in/scroll", "type": "vector2", "requirement": "optional" },
+    { "name": "/actions/eyepointer/out/haptic", "type": "vibration", "requirement": "optional" }
+  ],
+  "localization": [
+    {
+      "language_tag": "en_US",
+      "/actions/eyepointer": "Eye Pointer",
+      "/actions/eyepointer/in/gaze": "Eye gaze",
+      "/actions/eyepointer/in/click_left": "Left click where I look",
+      "/actions/eyepointer/in/click_right": "Right click where I look",
+      "/actions/eyepointer/in/toggle": "Turn eye pointer on/off",
+      "/actions/eyepointer/in/scroll": "Scroll where I look",
+      "/actions/eyepointer/out/haptic": "Click feedback"
+    }
+  ]
+}

@@ -1,0 +1,63 @@
+{
+  "action_manifest_version": 0,
+  "alias_info": {},
+  "app_key": "farhanthetinkerer.frameeyepointer",
+  "category": "steamvr_input",
+  "controller_type": "knuckles",
+  "description": "Eye pointer clicks",
+  "name": "Valve Index controllers",
+  "options": {},
+  "simulated_actions": [],
+  "bindings": {
+    "/actions/eyepointer": {
+      "sources": [
+        {
+          "path": "/user/hand/right/input/b",
+          "mode": "button",
+          "inputs": {
+            "click": {
+              "output": "/actions/eyepointer/in/click_left"
+            }
+          }
+        },
+        {
+          "path": "/user/hand/left/input/b",
+          "mode": "button",
+          "inputs": {
+            "click": {
+              "output": "/actions/eyepointer/in/click_right"
+            }
+          }
+        },
+        {
+          "path": "/user/hand/left/input/thumbstick",
+          "mode": "button",
+          "inputs": {
+            "long": {
+              "output": "/actions/eyepointer/in/toggle"
+            }
+          }
+        },
+        {
+          "path": "/user/hand/right/input/thumbstick",
+          "mode": "joystick",
+          "inputs": {
+            "position": {
+              "output": "/actions/eyepointer/in/scroll"
+            }
+          }
+        }
+      ],
+      "haptics": [
+        {
+          "output": "/actions/eyepointer/out/haptic",
+          "path": "/user/hand/right/output/haptic"
+        },
+        {
+          "output": "/actions/eyepointer/out/haptic",
+          "path": "/user/hand/left/output/haptic"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "source": "builtin",
+  "applications": [
+    {
+      "app_key": "farhanthetinkerer.frameeyepointer",
+      "launch_type": "binary",
+      "binary_path_windows": "FrameEyePointer.exe",
+      "binary_path_linux": "FrameEyePointer",
+      "arguments": "",
+      "action_manifest_path": "actions.json",
+      "is_dashboard_overlay": true,
+      "strings": {
+        "en_us": {
+          "name": "Frame Eye Pointer",
+          "description": "Eye-tracked laser pointer for SteamVR overlays and the Windows desktop"
+        }
+      }
+    }
+  ]
+}

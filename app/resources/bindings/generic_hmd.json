@@ -1,0 +1,21 @@
+{
+  "action_manifest_version": 0,
+  "alias_info": {},
+  "app_key": "farhanthetinkerer.frameeyepointer",
+  "category": "steamvr_input",
+  "controller_type": "generic_hmd",
+  "description": "Eye gaze for the eye pointer",
+  "name": "Generic HMD eye gaze",
+  "options": {},
+  "simulated_actions": [],
+  "bindings": {
+    "/actions/eyepointer": {
+      "eyetracking": [
+        {
+          "output": "/actions/eyepointer/in/gaze",
+          "path": "/user/head/eyetracking"
+        }
+      ]
+    }
+  }
+}

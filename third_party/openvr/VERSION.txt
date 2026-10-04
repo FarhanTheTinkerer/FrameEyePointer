@@ -1,0 +1,2 @@
+OpenVR SDK 2.15.6 (ValveSoftware/openvr commit 0924064), unmodified.
+Only the files needed to build FrameEyePointer are included. License: see LICENSE (BSD-3-Clause).
