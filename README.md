@@ -102,10 +102,10 @@ the app is running. Main knobs:
 
 ## Build
 
-Windows (Visual Studio 2022):
+Windows (Visual Studio 2022 or newer):
 
 ```powershell
-cmake -S . -B build -G "Visual Studio 17 2022" -A x64
+cmake -S . -B build -A x64
 cmake --build build --config Release
 ctest --test-dir build -C Release
 cmake --install build --config Release --prefix dist/FrameEyePointer
